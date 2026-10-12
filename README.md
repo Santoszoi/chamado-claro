@@ -8,9 +8,11 @@ People often abandon forms when they cannot identify what failed or where to con
 
 ## Try it locally
 
-Requires Node.js 24 or newer and npm. Extract the complete project folder, open a terminal inside it, then run:
+Requires Node.js 24 or newer and npm. Clone the repository, open a terminal inside it, then run:
 
 ```bash
+git clone https://github.com/Santoszoi/chamado-claro.git
+cd chamado-claro
 npm ci
 npm run dev
 ```
@@ -62,7 +64,7 @@ npx playwright install chromium
 npm run test:e2e
 ```
 
-On Linux CI, use `npx playwright install --with-deps chromium`. The included workflow runs these checks when you publish the repository; it has not been executed on GitHub in this delivery.
+On Linux CI, use `npx playwright install --with-deps chromium`. The [GitHub Actions workflow](https://github.com/Santoszoi/chamado-claro/actions) runs these checks on pushes and pull requests. See the latest run for its current status.
 
 Verified on 12 October 2026 with Node 24.19.0 and headless Chromium 153:
 
@@ -89,9 +91,9 @@ The PNG files are unaltered browser screenshots. The silent MP4 records real scr
 ```bash
 npx playwright install chromium ffmpeg
 node scripts/capture.mjs
-ffmpeg -i media/chamado-claro.webm -c:v libx264 -pix_fmt yuv420p -movflags +faststart media/chamado-claro.mp4
+ffmpeg -i media/chamado-claro.webm -vf "scale=960:-2,fps=30" -c:v libx264 -profile:v baseline -level:v 3.1 -pix_fmt yuv420p -movflags +faststart media/chamado-claro.mp4
 ```
 
 FFmpeg is needed only for MP4 conversion, not to run the app. [Five-day study plan](docs/ROTEIRO-5-DIAS.md) · [LinkedIn draft](docs/LINKEDIN.md) · [Publishing checklist](docs/PUBLICAR.md).
 
-Built as a small portfolio exercise for Marcos Neves / Marcos Solutions. No external platform was published as part of this delivery.
+Built as a small portfolio exercise for Marcos Neves / Marcos Solutions. Source code and demonstration media are published here. The LinkedIn text remains a draft.
