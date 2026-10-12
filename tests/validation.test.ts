@@ -1,0 +1,12 @@
+import { test } from 'node:test';
+import assert from 'node:assert/strict';
+import { initialTicket, normalizeTicket, validateTicket } from '../src/validation.ts';
+const valid = { name: 'Alex Silva', email: 'alex@example.com', title: 'Erro ao acessar o painel', category: 'Acesso e conta', priority: 'Normal', description: 'Ao entrar no painel, aparece uma mensagem de acesso negado.' };
+test('accepts a valid fictitious ticket', () => assert.deepEqual(validateTicket(valid), {}));
+test('reports all missing fields, keeping default priority valid', () => assert.deepEqual(Object.keys(validateTicket(initialTicket)), ['name', 'email', 'title', 'category', 'description']));
+test('rejects whitespace-only content', () => assert.ok(validateTicket({ ...valid, description: ' '.repeat(30) }).description));
+test('rejects malformed email', () => { for (const email of ['alex', 'alex@', 'a@@b.com', 'alex @example.com']) assert.ok(validateTicket({ ...valid, email }).email); });
+test('rejects unsupported category and priority', () => { const errors = validateTicket({ ...valid, category: 'invalid', priority: 'Urgent' }); assert.ok(errors.category); assert.ok(errors.priority); });
+test('accepts exact length boundaries', () => { assert.deepEqual(validateTicket({ ...valid, name: 'AB', title: 'abcde', description: 'x'.repeat(20) }), {}); assert.deepEqual(validateTicket({ ...valid, name: 'x'.repeat(80), title: 'x'.repeat(100), description: 'x'.repeat(1000) }), {}); });
+test('rejects values outside boundaries', () => { const errors = validateTicket({ ...valid, name: 'A', title: 'abcd', description: 'x'.repeat(1001) }); assert.ok(errors.name); assert.ok(errors.title); assert.ok(errors.description); });
+test('normalizes without mutating input', () => { const input = { ...valid, name: ' Alex Silva ', title: ' Acesso ao painel ' }; const normalized = normalizeTicket(input); assert.equal(normalized.name, 'Alex Silva'); assert.equal(normalized.title, 'Acesso ao painel'); assert.equal(input.name, ' Alex Silva '); });

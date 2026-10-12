@@ -1,0 +1,17 @@
+CHAMADO CLARO — Marcos Solutions
+
+1. Instale Node.js 24 ou superior.
+2. Abra um terminal nesta pasta.
+3. Execute npm ci
+4. Execute npm run dev
+5. Abra o endereço local exibido no terminal.
+
+README.md: documentação técnica em inglês.
+docs/ROTEIRO-5-DIAS.md: estudo e preparação para entrevista.
+docs/LINKEDIN.md: texto de publicação.
+docs/VALIDATION.md: testes reais e limitações.
+docs/PUBLICAR.md: preparação do GitHub.
+media/: capturas reais e vídeo MP4.
+
+Demonstração sem backend, e-mail ou persistência. Use dados fictícios.
+Não foi publicado automaticamente no GitHub ou LinkedIn.
